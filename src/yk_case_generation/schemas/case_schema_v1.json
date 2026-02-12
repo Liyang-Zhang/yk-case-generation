@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CaseSchemaV1",
+  "type": "object",
+  "properties": {
+    "case_id": {
+      "type": "string"
+    },
+    "source_summary": {
+      "type": "object",
+      "properties": {
+        "lims_sources": {"type": "integer"},
+        "ocr_sources": {"type": "integer"},
+        "total_pages": {"type": "integer"},
+        "total_lines": {"type": "integer"}
+      },
+      "required": ["lims_sources", "ocr_sources", "total_pages", "total_lines"],
+      "additionalProperties": false
+    },
+    "patient_info": {
+      "type": "array",
+      "items": {"$ref": "#/definitions/fact"}
+    },
+    "chief_complaint": {
+      "type": "array",
+      "items": {"$ref": "#/definitions/fact"}
+    },
+    "medical_history": {
+      "type": "array",
+      "items": {"$ref": "#/definitions/fact"}
+    },
+    "family_history": {
+      "type": "array",
+      "items": {"$ref": "#/definitions/fact"}
+    },
+    "tests_and_exams": {
+      "type": "array",
+      "items": {"$ref": "#/definitions/fact"}
+    },
+    "diagnosis": {
+      "type": "array",
+      "items": {"$ref": "#/definitions/fact"}
+    },
+    "quality": {
+      "type": "object",
+      "properties": {
+        "warnings": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "missing_critical": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      },
+      "required": ["warnings", "missing_critical"],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "case_id",
+    "source_summary",
+    "patient_info",
+    "chief_complaint",
+    "medical_history",
+    "family_history",
+    "diagnosis",
+    "quality"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "evidence_ref": {
+      "type": "object",
+      "properties": {
+        "source_id": {"type": "string"},
+        "page": {"type": ["integer", "null"]},
+        "line_id": {"type": "integer"},
+        "quote": {"type": "string"}
+      },
+      "required": ["source_id", "page", "line_id", "quote"],
+      "additionalProperties": false
+    },
+    "fact": {
+      "type": "object",
+      "properties": {
+        "text": {"type": "string"},
+        "polarity": {"type": "string", "enum": ["asserted", "negated", "unknown"]},
+        "evidence": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/evidence_ref"},
+          "minItems": 1
+        }
+      },
+      "required": ["text", "polarity", "evidence"],
+      "additionalProperties": false
+    }
+  }
+}

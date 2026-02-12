@@ -1,0 +1,27 @@
+name: yk-case-generation
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - fastapi
+      - uvicorn
+  - httpx
+  - pydantic
+  - python-docx
+  - pillow
+  - pdf2image
+  - tencentcloud-sdk-python
+  - pydantic-settings
+  - jsonschema
+  - typer
+  - structlog
+  - pypdf
+  - tenacity
+  - pandas
+  - pytest
+  - pytest-mock
+  - black
+  - ruff
+  - mypy
